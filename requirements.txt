@@ -1,4 +1,6 @@
 requests
+requests-oauthlib
 selenium
 webdriver-manager
 python-dotenv
+facebook-sdk

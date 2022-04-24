@@ -61,7 +61,8 @@ def get_screenshot(playlist_id: str):
     range_end = video_duration - 30 if video_duration > 60 else video_duration - 10
     timestamp = random.randint(range_start, range_end)
     
-    _log("Seeking to {}.".format(format_timestamp(timestamp)))
+    formatted_timestamp = format_timestamp(timestamp)
+    _log("Seeking to {}.".format(formatted_timestamp))
     driver.execute_script("player.seekTo({}, true);".format(timestamp))
     
     # Double click the player to hide the UI
@@ -93,4 +94,4 @@ def get_screenshot(playlist_id: str):
     _error("Script has been unable to take a screenshot. Shutting down...")
     quit()
 
-  return video, timestamp
+  return video, formatted_timestamp
