@@ -50,6 +50,7 @@ def get_screenshot(playlist_id: str):
       video_duration = int(driver.execute_script("return player.getDuration();"))
       if (video_duration == 0):
         time.sleep(0.5)
+        duration_retries += 1
     
     if (video_duration == 0):
       _warn("Unable to get video duration.")
@@ -71,19 +72,18 @@ def get_screenshot(playlist_id: str):
     player.click()
     player.click()
     try:
-      WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CSS_SELECTOR, "button[aria-label='Play (k)']"))) # Wait for the paid promotion banner to be hidden
+      WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CSS_SELECTOR, "button[aria-label='Play (k)']"))) # Wait for the play button to be hidden
     except:
       _warn("Play button was not hidden.")
       retry += 1
       continue
     try:
-
       WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CLASS_NAME, "ytp-paid-content-overlay-text"))) # Wait for the paid promotion banner to be hidden
     except:
       _warn("Paid promotion banner was not hidden.")
       retry += 1
       continue
-    
+
     player.screenshot("linus.png")
     screenshot_taken = True
     _log("Successfully taken a screenshot!")
