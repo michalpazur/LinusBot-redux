@@ -78,12 +78,17 @@ def get_screenshot(playlist_id: str):
       retry += 1
       continue
     try:
-      WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CLASS_NAME, "ytp-paid-content-overlay-text"))) # Wait for the paid promotion banner to be hidden
+      WebDriverWait(driver, 20).until(EC.invisibility_of_element((By.CLASS_NAME, "ytp-paid-content-overlay-text"))) # Wait for the paid promotion banner to be hidden
     except:
       _warn("Paid promotion banner was not hidden.")
       retry += 1
       continue
-
+    
+    # Make up for time wasted on waiting
+    driver.switch_to.default_content()
+    driver.execute_script("player.seekTo({}, true);".format(timestamp))
+    
+    player = driver.find_element_by_id("player")
     player.screenshot("linus.png")
     screenshot_taken = True
     _log("Successfully taken a screenshot!")
