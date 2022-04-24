@@ -143,3 +143,6 @@ dmypy.json
 
 # Hide cached videos jsons
 /youtube/*.json 
+
+# Hide screenshots
+/linus.png

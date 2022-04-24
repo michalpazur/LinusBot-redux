@@ -1,6 +1,7 @@
 from utils.log import _log, _error
 from dotenv import load_dotenv
 import youtube.retrive_uploads as youtube
+import screenshot.get_screenshot as screenshot
 
 def main():
   with open("credits/credits.txt", encoding="utf-8") as _credits:
@@ -16,7 +17,9 @@ def main():
     quit()
     
   _log("Successfully loaded .env variables.")
-  youtube.retrive_uploads()
+  playlist_id = youtube.retrive_uploads()
+  video, timestamp = screenshot.get_screenshot(playlist_id)
+  
 
 if (__name__ == "__main__"):
   try:

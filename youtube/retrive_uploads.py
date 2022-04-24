@@ -75,3 +75,5 @@ def retrive_uploads():
   with open("youtube/{}.json".format(uploads_playlist), "w", encoding="utf-8") as f:
     json.dump(videos, f, indent=2)
     _log("Successfully saved cached videos to youtube/{}.json!".format(uploads_playlist))
+
+  return uploads_playlist
