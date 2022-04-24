@@ -140,3 +140,6 @@ dmypy.json
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Hide cached videos jsons
+/youtube/*.json 
