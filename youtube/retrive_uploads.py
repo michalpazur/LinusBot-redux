@@ -69,6 +69,9 @@ def retrive_uploads():
     _warn("Cached videos array is longer than video count ({} vs. {}). Caching all videos...".format(cached_videos_length, video_count))
     cached_videos_length = 0
     uploaded_videos = []
+  elif (cached_videos_length == video_count):
+    _log("Found {} videos. No need to update.".format(cached_videos_length))
+    return uploads_playlist
   
   videos = handle_download(uploads_playlist, video_count, cached_videos_length, uploaded_videos)
 
