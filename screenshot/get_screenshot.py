@@ -11,12 +11,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 max_retries = 5
+options = webdriver.ChromeOptions()
+options.add_argument("--no-sandbox")
 
 def get_screenshot(playlist_id: str):
   with open("youtube/{}.json".format(playlist_id), encoding="utf_8") as f:
     uploads_playlist = json.load(f)
   
-  driver = webdriver.Chrome(ChromeDriverManager().install())
+  driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
   driver.set_window_rect(width=1440, height=900)
   driver.get("file://{}/player.html".format(os.getcwd()))
 
@@ -33,7 +35,7 @@ def get_screenshot(playlist_id: str):
     
     driver.switch_to.default_content()
     driver.execute_script("player.loadVideoById('{}');".format(video_id))
-    player_frame = driver.find_element_by_id("player")
+    player_frame = driver.find_element(By.ID, "player")
     driver.switch_to.frame(player_frame)
     WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[title='Play (k)']"))).click()
     try:
@@ -68,7 +70,7 @@ def get_screenshot(playlist_id: str):
     
     # Double click the player to hide the UI
     driver.switch_to.frame(player_frame)
-    player = driver.find_element_by_class_name("html5-video-player")
+    player = driver.find_element(By.CLASS_NAME, "html5-video-player")
     player.click()
     player.click()
     try:
@@ -88,10 +90,10 @@ def get_screenshot(playlist_id: str):
     driver.switch_to.default_content()
     driver.execute_script("player.seekTo({}, true);".format(timestamp))
     
-    player = driver.find_element_by_id("player")
-    player.screenshot("linus.png")
-    screenshot_taken = True
-    _log("Successfully taken a screenshot!")
+    player = driver.find_element(By.ID, "player")
+    screenshot_taken = player.screenshot("linus.png")
+    if (screenshot_taken):
+      _log("Successfully taken a screenshot!")
 
   driver.quit()
 
