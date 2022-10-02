@@ -35,7 +35,7 @@ def get_screenshot(playlist_id: str):
     driver.execute_script("player.loadVideoById('{}');".format(video_id))
     player_frame = driver.find_element_by_id("player")
     driver.switch_to.frame(player_frame)
-    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[aria-label='Play (k)']"))).click()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[title='Play (k)']"))).click()
     try:
       WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[title='Subtitles/closed captions (c)']"))).click()
     except:
@@ -72,7 +72,7 @@ def get_screenshot(playlist_id: str):
     player.click()
     player.click()
     try:
-      WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CSS_SELECTOR, "button[aria-label='Play (k)']"))) # Wait for the play button to be hidden
+      WebDriverWait(driver, 5).until(EC.invisibility_of_element((By.CSS_SELECTOR, "button[title~='(k)'"))) # Wait for the play button to be hidden
     except:
       _warn("Play button was not hidden.")
       retry += 1
